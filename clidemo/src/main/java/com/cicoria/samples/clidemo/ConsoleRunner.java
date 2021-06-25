@@ -19,7 +19,7 @@ public class ConsoleRunner implements CommandLineRunner {
     }
 
     @Override
-    @Order(1)
+    @Order(value = 1)
     public void run(String... args) {
 
         var rv = repository.findOne("foo");//.getNext();

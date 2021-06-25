@@ -2,27 +2,27 @@ package com.cicoria.samples.clidemo.repository.impl;
 
 import com.cicoria.samples.clidemo.model.Message;
 import com.cicoria.samples.clidemo.repository.MessageRepository;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
-import java.lang.annotation.Annotation;
-
-@Configuration
-@ComponentScan()
 public class FileMessageRepository implements MessageRepository<Message, String> {
+    private static final Logger log = LoggerFactory.getLogger(FileMessageRepository.class);
+
+    private final String location;
+
+    public FileMessageRepository(String location) {
+        this.location = location;
+        log.info("using location " + this.location);
+    }
+
     @Override
     public Message findOne(String s) {
+        log.info("using location " + this.location);
         return new Message("foo");
     }
 
     @Override
-    public Message save(Message entity) {
-        return null;
-    }
-
-    @Override
     public Iterable<Message> findAll() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 }
