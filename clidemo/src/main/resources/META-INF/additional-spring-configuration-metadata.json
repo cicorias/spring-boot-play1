@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "app.message.repository.file.location",
+      "type": "java.lang.String",
+      "description": "Description for app.message.repository.file.location."
+  }
+] }
