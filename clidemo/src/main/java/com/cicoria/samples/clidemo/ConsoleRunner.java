@@ -14,7 +14,8 @@ public class ConsoleRunner implements CommandLineRunner {
 
     private final MessageRepository<Message, String> repository;
 
-    public ConsoleRunner(MessageRepository<Message, String> repository) {
+    public ConsoleRunner(MessageRepository<Message, String> repository)
+    {
         this.repository = repository;
     }
 

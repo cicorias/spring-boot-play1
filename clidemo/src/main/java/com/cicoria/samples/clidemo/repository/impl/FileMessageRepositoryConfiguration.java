@@ -14,7 +14,8 @@ public class FileMessageRepositoryConfiguration {
 
     @Bean
     //@ConfigurationProperties(prefix = "app.message.repository.file")
-    public FileMessageRepository dataSource() {
+    public FileMessageRepository dataSource()
+    {
         return new FileMessageRepository(this.location);
     }
 }

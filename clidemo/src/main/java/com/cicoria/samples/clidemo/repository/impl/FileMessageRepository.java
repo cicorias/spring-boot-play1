@@ -22,7 +22,8 @@ public class FileMessageRepository implements MessageRepository<Message, String>
     }
 
     @Override
-    public Iterable<Message> findAll() {
+    public Iterable<Message> findAll()
+    {
         throw new UnsupportedOperationException();
     }
 }
