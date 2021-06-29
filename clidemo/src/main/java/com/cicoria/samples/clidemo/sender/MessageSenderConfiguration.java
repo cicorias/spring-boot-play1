@@ -1,6 +1,5 @@
 package com.cicoria.samples.clidemo.sender;
 
-import com.cicoria.samples.clidemo.sender.Sender;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -8,13 +7,13 @@ import org.springframework.context.annotation.Configuration;
 
 @ComponentScan
 @Configuration
-public class SenderConfiguration {
-    @Value(value = "${app.sender.baseUrl}" )
+public class MessageSenderConfiguration {
+    @Value(value = "${app.messageSender.baseUrl}" )
     private String baseUrl;
 
     @Bean
-    public Sender sender()
+    public MessageSender sender()
     {
-        return new Sender(this.baseUrl);
+        return new MessageSender(this.baseUrl);
     }
 }
