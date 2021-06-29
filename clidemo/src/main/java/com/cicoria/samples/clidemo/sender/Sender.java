@@ -1,4 +1,4 @@
-package com.cicoria.samples.clidemo;
+package com.cicoria.samples.clidemo.sender;
 
 import com.cicoria.samples.clidemo.model.Message;
 import org.slf4j.Logger;
@@ -13,6 +13,7 @@ public class Sender {
 
 
     public Sender(String baseUrl) {
+        this.baseUrl = baseUrl;
         webClient = WebClient.builder()
                 .baseUrl(baseUrl)
                 .build();

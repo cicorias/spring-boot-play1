@@ -2,6 +2,7 @@ package com.cicoria.samples.clidemo;
 
 import com.cicoria.samples.clidemo.model.Message;
 import com.cicoria.samples.clidemo.repository.MessageRepository;
+import com.cicoria.samples.clidemo.sender.Sender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -25,10 +26,8 @@ public class ConsoleRunner implements CommandLineRunner {
     @Order(value = 1)
     public void run(String... args) {
 
-        //Sender sender = new Sender();
         for (Message message: repository.findAll()){
             log.info(message.toString());
-
             sender.Send(message);
         }
 
