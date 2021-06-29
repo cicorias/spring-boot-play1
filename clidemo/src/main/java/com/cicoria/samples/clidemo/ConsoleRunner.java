@@ -17,9 +17,11 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class ConsoleRunner implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(ConsoleRunner.class);
-
     private final MessageRepository<Message, String> repository;
     private final MessageSender messageSender;
+
+    @Value(value = "${app.message-sender.think-time-milliseconds:500}")
+    private int thinkTimeMs; // half a second default
 
     public ConsoleRunner(MessageRepository<Message, String> repository, MessageSender messageSender)
     {
@@ -27,33 +29,22 @@ public class ConsoleRunner implements CommandLineRunner {
         this.messageSender = messageSender;
     }
 
-    @Value(value = "${app.message-sender.think-time-milliseconds}")
-    private int thinkTimeMs = 500; // half a second default
-
     @Override
     @Order(value = 1)
     public void run(String... args) {
-
-        Runnable task1 = () -> {
-            count++;
-            System.out.println("Running...task1 - count : " + count);
-            for (Message message: repository.findAll()) {
-                log.info(message.toString());
-                messageSender.Send(message);
-            }
-        };
-
         ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.scheduleAtFixedRate(
-                Classname::someTask,
-                0,
-                delayInSeconds,
-                TimeUnit.MILLISECONDS);
-  /*      for (Message message: repository.findAll()){
-            log.info(message.toString());
-            messageSender.Send(message);
-            sleep
-        }*/
+        int addedDelay = 0;
+        // TODO: this could be the looping scheduler approach.
+        for (Message message: repository.findAll()) {
+            log.info("delay of {}ms sending: {}", addedDelay, message.toString());
 
-    }
+            executorService.schedule(() -> {
+                log.info("now sending: {}", message);
+                messageSender.Send(message);
+            }, addedDelay, TimeUnit.MILLISECONDS);
+
+            addedDelay += thinkTimeMs;
+        }
+        executorService.shutdown();
+     }
 }
