@@ -13,18 +13,24 @@ public class ConsoleRunner implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(ConsoleRunner.class);
 
     private final MessageRepository<Message, String> repository;
+    private final Sender sender;
 
-    public ConsoleRunner(MessageRepository<Message, String> repository)
+    public ConsoleRunner(MessageRepository<Message, String> repository, Sender sender)
     {
         this.repository = repository;
+        this.sender = sender;
     }
 
     @Override
     @Order(value = 1)
     public void run(String... args) {
 
-        for (Message file: repository.findAll()){
-            log.info(file.toString());
+        //Sender sender = new Sender();
+        for (Message message: repository.findAll()){
+            log.info(message.toString());
+
+            sender.Send(message);
         }
+
     }
 }

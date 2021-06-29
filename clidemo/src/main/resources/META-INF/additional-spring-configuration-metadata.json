@@ -4,5 +4,10 @@
       "name": "app.message.repository.file.location",
       "type": "java.lang.String",
       "description": "Description for app.message.repository.file.location."
-  }
-] }
+    },
+    {
+      "name": "app.sender.baseUrl",
+      "type": "java.lang.String",
+      "description": "Description for app.sender.baseUrl."
+    }
+  ] }

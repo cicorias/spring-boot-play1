@@ -2,10 +2,12 @@ package com.cicoria.samples.clidemo.repository.impl;
 
 import com.cicoria.samples.clidemo.model.Message;
 import com.cicoria.samples.clidemo.repository.MessageRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -33,19 +35,17 @@ public class FileMessageRepository implements MessageRepository<Message, String>
     {
         Set<Message> rv = new HashSet<>();
         try {
-            for(String file: listFilesUsingFileWalkAndVisitor(this.location))
+            for(String fileName: listFilesUsingFileWalkAndVisitor(this.location))
             {
-                if (Files.isReadable(Path.of(file))){
+                if (Files.isReadable(Path.of(fileName))){
                     ObjectMapper mapper = new ObjectMapper();
-                    Map<?, ?> map = mapper.readValue(Paths.get(file).toFile(), Map.class);
-                    for (Map.Entry<?, ?> entry : map.entrySet()) {
-                        log.info(entry.getKey() + "=" + entry.getValue());
-                    }
+                    File file = new File(fileName);
+                    JsonNode jsonAsNode = mapper.readTree(file);
+                    rv.add(new Message(jsonAsNode));
                 }
                 else {
-                    log.error("File {} is not readable", file);
+                    log.error("File {} is not readable", fileName);
                 }
-                rv.add(new Message(file));
             }
 
         }

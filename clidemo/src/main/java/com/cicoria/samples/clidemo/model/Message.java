@@ -1,11 +1,21 @@
 package com.cicoria.samples.clidemo.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 public class Message {
-    public String body;
+    private String body;
+    private JsonNode json;
+
 
     public Message(String body) {
         this.body = body;
     }
+
+    public Message(JsonNode json){
+        this.json = json;
+        this.body = json.toString();
+    }
+
 
     public String getBody() {
         return body;
