@@ -23,8 +23,8 @@ public class ConsoleRunner implements CommandLineRunner {
     @Order(value = 1)
     public void run(String... args) {
 
-        var rv = repository.findOne("foo");//.getNext();
-        log.info(rv.toString());
-
+        for (Message file: repository.findAll()){
+            log.info(file.toString());
+        }
     }
 }
