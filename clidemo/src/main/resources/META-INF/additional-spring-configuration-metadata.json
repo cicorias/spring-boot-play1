@@ -6,8 +6,13 @@
       "description": "Description for app.message.repository.file.location."
     },
     {
-      "name": "app.sender.baseUrl",
+      "name": "app.messageSender.baseUrl",
       "type": "java.lang.String",
-      "description": "Description for app.sender.baseUrl."
+      "description": "Description for app.messageSender.baseUrl."
+    },
+    {
+      "name": "app.message-sender.think-time-milliseconds",
+      "type": "java.lang.Integer",
+      "description": "Description for app.message-sender.think-time-milliseconds."
     }
   ] }

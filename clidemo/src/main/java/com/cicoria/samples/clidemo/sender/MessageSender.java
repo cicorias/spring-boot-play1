@@ -9,21 +9,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class MessageSender {
     private static final Logger log = LoggerFactory.getLogger(MessageSender.class);
     private String baseUrl;
-    //private final WebClient webClient;
-
 
     public MessageSender(String baseUrl) {
         this.baseUrl = baseUrl;
-//
-//        WebClient.Builder builder = WebClient.builder();
-//        builder.baseUrl(baseUrl);
-//        webClient = builder
-//                .build();
     }
 
     public void Send(Message message) {
         WebClient webClient = WebClient.create(this.baseUrl);
-        String url = baseUrl; // +"/";
+        String url = baseUrl;
         try {
             var resp = webClient.post().uri(url)
                     .bodyValue(message.getBody())

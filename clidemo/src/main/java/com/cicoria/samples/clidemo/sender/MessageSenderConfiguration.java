@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan
 @Configuration
 public class MessageSenderConfiguration {
-    @Value(value = "${app.messageSender.baseUrl}" )
+    @Value(value = "${app.message-sender.baseUrl}" )
     private String baseUrl;
 
     @Bean

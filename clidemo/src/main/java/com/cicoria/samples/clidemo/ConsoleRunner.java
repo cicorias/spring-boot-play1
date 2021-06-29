@@ -5,9 +5,14 @@ import com.cicoria.samples.clidemo.repository.MessageRepository;
 import com.cicoria.samples.clidemo.sender.MessageSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class ConsoleRunner implements CommandLineRunner {
@@ -22,14 +27,33 @@ public class ConsoleRunner implements CommandLineRunner {
         this.messageSender = messageSender;
     }
 
+    @Value(value = "${app.message-sender.think-time-milliseconds}")
+    private int thinkTimeMs = 500; // half a second default
+
     @Override
     @Order(value = 1)
     public void run(String... args) {
 
-        for (Message message: repository.findAll()){
+        Runnable task1 = () -> {
+            count++;
+            System.out.println("Running...task1 - count : " + count);
+            for (Message message: repository.findAll()) {
+                log.info(message.toString());
+                messageSender.Send(message);
+            }
+        };
+
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.scheduleAtFixedRate(
+                Classname::someTask,
+                0,
+                delayInSeconds,
+                TimeUnit.MILLISECONDS);
+  /*      for (Message message: repository.findAll()){
             log.info(message.toString());
             messageSender.Send(message);
-        }
+            sleep
+        }*/
 
     }
 }
