@@ -17,15 +17,15 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 @ConditionalOnExpression("${app.message-sender.by-path:false}")
-public class ConsoleRunner implements CommandLineRunner {
-    private static final Logger log = LoggerFactory.getLogger(ConsoleRunner.class);
+public class SendPathFiles implements CommandLineRunner {
+    private static final Logger log = LoggerFactory.getLogger(SendPathFiles.class);
     private final MessageRepository<Message, String> repository;
     private final MessageSender messageSender;
 
     @Value(value = "${app.message-sender.think-time-milliseconds:500}")
     private int thinkTimeMs; // half a second default
 
-    public ConsoleRunner(MessageRepository<Message, String> repository, MessageSender messageSender)
+    public SendPathFiles(MessageRepository<Message, String> repository, MessageSender messageSender)
     {
         this.repository = repository;
         this.messageSender = messageSender;
