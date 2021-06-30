@@ -12,8 +12,7 @@ public class MessageSender {
     private final String baseUrl;
     private final WebClient webClient;
 
-    public MessageSender(String baseUrl)
-    {
+    public MessageSender(String baseUrl) {
         this.baseUrl = baseUrl;
         this.webClient = WebClient
                 .builder()
@@ -28,11 +27,12 @@ public class MessageSender {
     }
 
     public void Send(Message message) {
-
         try {
             var resp = webClient.post().uri(baseUrl)
                     .bodyValue(message.getBody())
-                    .retrieve().toBodilessEntity().block();
+                    .retrieve()
+                    .toBodilessEntity()
+                    .block();
 
             if (null != resp)
                 log.info(String.valueOf(resp.getStatusCode()));
@@ -41,6 +41,4 @@ public class MessageSender {
             log.info(exp.getMessage());
         }
     }
-
-
 }

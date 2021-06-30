@@ -14,5 +14,10 @@
       "name": "app.message-sender.think-time-milliseconds",
       "type": "java.lang.Integer",
       "description": "Description for app.message-sender.think-time-milliseconds."
+    },
+    {
+      "name": "app.message-sender.by-path",
+      "type": "java.lang.Boolean",
+      "description": "Description for app.message-sender.by-path."
     }
   ] }

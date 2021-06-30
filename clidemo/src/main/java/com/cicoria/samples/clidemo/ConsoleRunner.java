@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @Component
+@ConditionalOnExpression("${app.message-sender.by-path:false}")
 public class ConsoleRunner implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(ConsoleRunner.class);
     private final MessageRepository<Message, String> repository;
