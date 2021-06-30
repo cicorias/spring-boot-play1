@@ -11,7 +11,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -68,8 +72,15 @@ public class SendFilesRunner implements CommandLineRunner {
         Matcher matcher = pattern.matcher(text);
         HashMap<String,Object> replacements = new HashMap<String,Object>();
         //populate the replacements map ...
-        replacements.put("timestamp", 1234567);
-        replacements.put("isoTimestamp", "foobar");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        Date date = new Date(System.currentTimeMillis());
+        long ut1 = date.getTime() / 1000L;
+        //long ut1 = Instant.now().getEpochSecond();
+        replacements.put("timestamp", ut1);
+        replacements.put("isoTimestamp", sdf.format(date));
         StringBuilder builder = new StringBuilder();
         int i = 0;
         while (matcher.find()) {
