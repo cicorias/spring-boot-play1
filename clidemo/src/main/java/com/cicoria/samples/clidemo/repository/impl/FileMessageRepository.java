@@ -38,19 +38,15 @@ public class FileMessageRepository implements MessageRepository<Message, String>
             for(String fileName: listFilesUsingFileWalkAndVisitor(this.location))
             {
                 if (Files.isReadable(Path.of(fileName))){
-                    ObjectMapper mapper = new ObjectMapper();
-                    File file = new File(fileName);
-                    JsonNode jsonAsNode = mapper.readTree(file);
-                    rv.add(new Message(jsonAsNode));
+                    rv.add(new Message(Files.readString(Path.of(fileName))));
                 }
                 else {
                     log.error("File {} is not readable", fileName);
                 }
             }
-
         }
         catch (IOException ex) {
-            ;
+            ; //TODO: handle io exception
         }
         return rv;
     }

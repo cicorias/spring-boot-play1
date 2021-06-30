@@ -20,16 +20,16 @@ public class MessageSender {
                 .defaultHeaders(httpHeaders -> {
                     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
                     // TODO: conditional add authorization header name and key value
-                    httpHeaders.set("fish", "value");
+                    // TODO: custom or authorization httpHeaders.set("Authorization", "value");
                 })
                 .build();
 
     }
 
-    public void Send(Message message) {
+    public void Send(String message){
         try {
             var resp = webClient.post().uri(baseUrl)
-                    .bodyValue(message.getBody())
+                    .bodyValue(message)
                     .retrieve()
                     .toBodilessEntity()
                     .block();
@@ -40,5 +40,9 @@ public class MessageSender {
         } catch (Exception exp) {
             log.info(exp.getMessage());
         }
+    }
+
+    public void Send(Message message) {
+        Send(message.getBody());
     }
 }

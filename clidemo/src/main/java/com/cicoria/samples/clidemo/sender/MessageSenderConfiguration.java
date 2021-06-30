@@ -11,6 +11,9 @@ public class MessageSenderConfiguration {
     @Value(value = "${app.message-sender.baseUrl}" )
     private String baseUrl;
 
+    //TODO: need Authorization perhaps other headers
+    // https://www.baeldung.com/spring-yaml-inject-map or https://stackoverflow.com/a/31051377/140618
+
     @Bean
     public MessageSender sender()
     {
