@@ -23,9 +23,9 @@ public class MessageFilter {
 
     public MessageFilter(){
         // NOTE: raw regex \{\{\$(.+?)\}\} - use https://regex101.com/ to convert
-        String regex = "\\{\\{\\$(.+?)\\}\\}";
+        String regex = "\\{\\{\\$(.+?)}}";
         pattern = Pattern.compile(regex);
-        replacements = new HashMap<String,Object>();
+        replacements = new HashMap<>();
         sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
@@ -42,14 +42,14 @@ public class MessageFilter {
         int i = 0;
         while (matcher.find()) {
             Object replacement = replacements.get(matcher.group(1));
-            builder.append(text.substring(i, matcher.start()));
+            builder.append(text, i, matcher.start());
             if (replacement == null)
                 builder.append(matcher.group(0));
             else
                 builder.append(replacement);
             i = matcher.end();
         }
-        builder.append(text.substring(i, text.length()));
+        builder.append(text.substring(i));
         return builder.toString();
     }
 }

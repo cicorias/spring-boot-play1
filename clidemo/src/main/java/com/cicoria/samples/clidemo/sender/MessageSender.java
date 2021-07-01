@@ -34,7 +34,7 @@ public class MessageSender {
 
             if (null != resp) {
                 int statusCode = resp.getStatusCodeValue();
-                if (statusCode % 100 == 2) {
+                if (statusCode / 100 == 2) {
                     log.info("success for {} with status {}",
                             message, statusCode);
                 }
