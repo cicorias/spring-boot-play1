@@ -1,0 +1,9 @@
+{
+    "data": {
+        "time": {{$timestamp}},
+        "anothertime": {{$timestamp}},
+        "publish_time": "{{$isoTimestamp}}",
+        still: bad,
+        "foo": "bar"
+    }
+}

@@ -1,14 +1,25 @@
 package com.cicoria.samples.clidemo.model;
 
-import com.fasterxml.jackson.core.JsonParseException;
+import com.cicoria.samples.clidemo.SendFilesRunner;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Message {
+    private static final Logger log = LoggerFactory.getLogger(Message.class);
     private final JsonNode json;
     private final String content;
 
+
+    public Message(String contents, boolean strict){
+        this(contents);
+        if (strict && null == this.json){
+            log.error("failed to form proper json - validate the contents");
+        }
+
+    }
     public Message(String contents){
         JsonNode temp;
         this.content = contents;
@@ -18,6 +29,7 @@ public class Message {
         }
         catch(JsonProcessingException ex){
             temp = null;
+            log.warn("string read as invalid json - only stored as string object - OK if template");
         }
         this.json = temp;
     }

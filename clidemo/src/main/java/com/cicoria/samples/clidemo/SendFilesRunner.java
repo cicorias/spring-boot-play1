@@ -49,10 +49,10 @@ public class SendFilesRunner implements CommandLineRunner {
             log.info("delay of {}ms sending: {}", addedDelay, message.toString());
 
             executorService.schedule(() -> {
-                String parsedMessage = messageFilter.replace(message.getBody());
-                log.info("now sending: {}", parsedMessage);
+                Message parsedMessage = new Message(messageFilter.replace(message.getBody()), true);
+                log.info("now sending: {}", parsedMessage.getBody());
                 try {
-                    messageSender.Send(parsedMessage);
+                    messageSender.Send(parsedMessage.getBody());
                 } catch (Exception e) {
                     log.error("error during processing of message: {} with exception {} stack {}",
                             message, e.getMessage(), e.getStackTrace());

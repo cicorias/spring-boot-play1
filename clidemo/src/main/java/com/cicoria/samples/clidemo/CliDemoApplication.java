@@ -12,7 +12,7 @@ public class CliDemoApplication {
     public static void main(String[] args)
     {
         ConfigurableApplicationContext context = SpringApplication.run(CliDemoApplication.class, args); //.close();
-        log.info("done...");
+        log.info("console done - waiting on background threads...");
         context.close();
     }
 
