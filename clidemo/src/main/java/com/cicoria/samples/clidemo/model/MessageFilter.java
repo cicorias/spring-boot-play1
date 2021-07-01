@@ -33,8 +33,7 @@ public class MessageFilter {
     public String replace(String text){
         Matcher matcher = pattern.matcher(text);
         Date date = new Date(System.currentTimeMillis());
-        long ut1 = date.getTime() / 1000L;
-        //long ut1 = Instant.now().getEpochSecond();
+        long ut1 = date.getTime() / 1000L; //epoch time same as Instant.now().getEpochSecond();
         // TODO: externalize replacements
         replacements.put("timestamp", ut1);
         replacements.put("isoTimestamp", sdf.format(date));
