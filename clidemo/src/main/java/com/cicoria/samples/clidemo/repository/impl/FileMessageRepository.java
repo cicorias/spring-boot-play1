@@ -2,17 +2,13 @@ package com.cicoria.samples.clidemo.repository.impl;
 
 import com.cicoria.samples.clidemo.model.Message;
 import com.cicoria.samples.clidemo.repository.MessageRepository;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class FileMessageRepository implements MessageRepository<Message, String> {
@@ -26,7 +22,8 @@ public class FileMessageRepository implements MessageRepository<Message, String>
     }
 
     @Override
-    public Message findOne(String s) {
+    public Message findOne(String s)
+    {
        throw new UnsupportedOperationException();
     }
 
@@ -57,7 +54,7 @@ public class FileMessageRepository implements MessageRepository<Message, String>
         Files.walkFileTree(Paths.get(dir), new SimpleFileVisitor<>() {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
-                    throws IOException {
+            {
                 if (!Files.isDirectory(file)) {
                     fileList.add(file.toAbsolutePath().toString());
                 }

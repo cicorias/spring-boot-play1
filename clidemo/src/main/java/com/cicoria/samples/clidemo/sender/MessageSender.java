@@ -1,6 +1,5 @@
 package com.cicoria.samples.clidemo.sender;
 
-import com.cicoria.samples.clidemo.model.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -23,7 +22,6 @@ public class MessageSender {
                     // TODO: custom or authorization httpHeaders.set("Authorization", "value");
                 })
                 .build();
-
     }
 
     public void Send(String message){
@@ -34,15 +32,21 @@ public class MessageSender {
                     .toBodilessEntity()
                     .block();
 
-            if (null != resp)
-                log.info(String.valueOf(resp.getStatusCode()));
+            if (null != resp) {
+                int statusCode = resp.getStatusCodeValue();
+                if (statusCode % 100 == 2) {
+                    log.info("success for {} with status {}",
+                            message, statusCode);
+                }
+                else {
+                    log.error("failed for {} with status {}",
+                            message, statusCode);
+                }
+            }
 
         } catch (Exception exp) {
-            log.info(exp.getMessage());
+            log.info("failed on Send: with message: {} - ex: {}  stack: {}",
+                    message, exp.getMessage(), exp.getStackTrace());
         }
-    }
-
-    public void Send(Message message) {
-        Send(message.getBody());
     }
 }
