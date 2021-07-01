@@ -35,12 +35,12 @@ public class MessageSender {
             if (null != resp) {
                 int statusCode = resp.getStatusCodeValue();
                 if (statusCode / 100 == 2) {
-                    log.info("success for {} with status {}",
-                            message, statusCode);
+                    log.info("success {} for {}",
+                            statusCode, message);
                 }
                 else {
-                    log.error("failed for {} with status {}",
-                            message, statusCode);
+                    log.error("failed {} for {}",
+                            statusCode, message);
                 }
             }
 
