@@ -28,8 +28,7 @@ public class FileMessageRepository implements MessageRepository<Message, String>
     }
 
     @Override
-    public Set<Message> findAll()
-    {
+    public Set<Message> findAll() throws Exception {
         Set<Message> rv = new HashSet<>();
         try {
             for(String fileName: listFilesUsingFileWalkAndVisitor(this.location))
@@ -43,7 +42,9 @@ public class FileMessageRepository implements MessageRepository<Message, String>
             }
         }
         catch (IOException ex) {
-            ; //TODO: handle io exception
+            log.error("failure to create file set from location {} - ex: {} - stack: {}",
+                    this.location, ex.getMessage(), ex.getStackTrace());
+            throw ex;
         }
         return rv;
     }

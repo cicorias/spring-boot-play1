@@ -45,22 +45,29 @@ public class SendFilesRunner implements CommandLineRunner {
         int addedDelay = 0;
         // TODO: looping scheduler approach in alternate implementation to use
         // TODO: executorService.scheduleAtFixedRate
-        for (Message message : repository.findAll()) {
-            log.info("delay of {}ms sending: {}", addedDelay, message.toString());
+        try{
+            for (Message message : repository.findAll()) {
+                log.info("delay of {}ms sending: {}", addedDelay, message.toString());
 
-            executorService.schedule(() -> {
-                Message parsedMessage = new Message(messageFilter.replace(message.getBody()), true);
-                log.info("now sending: {}", parsedMessage.getBody());
-                try {
-                    messageSender.Send(parsedMessage.getBody());
-                } catch (Exception e) {
-                    log.error("error during processing of message: {} with exception {} stack {}",
-                            message, e.getMessage(), e.getStackTrace());
-                }
-            }, addedDelay, TimeUnit.MILLISECONDS);
+                executorService.schedule(() -> {
+                    Message parsedMessage = new Message(messageFilter.replace(message.getBody()), true);
+                    log.info("now sending: {}", parsedMessage.getBody());
+                    try {
+                        messageSender.Send(parsedMessage.getBody());
+                    } catch (Exception e) {
+                        log.error("error during processing of message: {} with exception {} stack {}",
+                                message, e.getMessage(), e.getStackTrace());
+                    }
+                }, addedDelay, TimeUnit.MILLISECONDS);
 
-            addedDelay += thinkTimeMs;
+                addedDelay += thinkTimeMs;
+            }
         }
+        catch (Exception ex){
+            log.error("could not send messages with ex: {} - stack: {}",
+                    ex.getMessage(), ex.getStackTrace());
+        }
+
         executorService.shutdown();
     }
 

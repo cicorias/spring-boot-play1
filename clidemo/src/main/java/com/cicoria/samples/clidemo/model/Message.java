@@ -1,6 +1,5 @@
 package com.cicoria.samples.clidemo.model;
 
-import com.cicoria.samples.clidemo.SendFilesRunner;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,10 +43,6 @@ public class Message {
         if (null != json)
             return json.toString();
         return this.content;
-    }
-
-    public JsonNode getRoot() {
-        return json;
     }
 
     @Override
